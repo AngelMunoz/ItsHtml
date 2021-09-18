@@ -1,0 +1,19 @@
+{
+  "name": "ItsHtml",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "postinstall": "dotnet tool restore",
+    "format": "dotnet fantomas . --recurse",
+    "start": "dotnet fable src -e .fs.js -s -o ./public --watch --run vite",
+    "build": "dotnet fable src -e .fs.js -s -o ./public --run vite build"
+  },
+  "dependencies": {
+    "fsharp-components": "^0.0.4",
+    "haunted": "4.8.2",
+    "lit-html": "2.0.0-rc.4"
+  },
+  "devDependencies": {
+    "vite": "^2.5.4"
+  }
+}
