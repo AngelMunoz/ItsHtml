@@ -65,6 +65,14 @@ let Notes () =
 
     let notes = state .> (fun s -> s.Notes)
 
+    let onTitleChange (evt: Event) =
+        SetTitle (evt.target :?> HTMLInputElement).value
+        |> dispatch
+
+    let onBodyChange (evt: Event) =
+        SetBody (evt.target :?> HTMLInputElement).value
+        |> dispatch
+
     Html.div [
         disposeOnUnmount [ state ]
         Html.form [
@@ -73,33 +81,15 @@ let Notes () =
                 Attr.typeText
                 Attr.name "title"
                 Attr.placeholder "Title"
-                onKeyDown
-                    (fun evt ->
-                        SetTitle (evt.target :?> HTMLInputElement).value
-                        |> dispatch)
-                    []
-                on
-                    "blur"
-                    (fun evt ->
-                        SetTitle (evt.target :?> HTMLInputElement).value
-                        |> dispatch)
-                    []
+                onKeyDown onTitleChange []
+                on "blur" onTitleChange []
             ]
             Html.input [
                 Attr.typeText
                 Attr.name "body"
                 Attr.placeholder "Body"
-                onKeyDown
-                    (fun evt ->
-                        SetBody (evt.target :?> HTMLInputElement).value
-                        |> dispatch)
-                    []
-                on
-                    "blur"
-                    (fun evt ->
-                        SetBody (evt.target :?> HTMLInputElement).value
-                        |> dispatch)
-                    []
+                onKeyDown onBodyChange []
+                on "blur" onBodyChange []
             ]
             Html.button [
                 Attr.typeSubmit
@@ -107,6 +97,6 @@ let Notes () =
             ]
         ]
         Html.ul [
-            eachk notes noteTemplate (fun n -> n.Id) [ InOut fade ]
+            Bind.each (notes, noteTemplate, [ InOut fade ])
         ]
     ]
