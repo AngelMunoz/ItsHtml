@@ -9,8 +9,9 @@ open Sutil.Styling
 
 open Types
 
-open type Fs
-open type FsAttrs
+open FsAttrs
+open Fs
+
 
 open Pages.Notes
 open Components.Icons
